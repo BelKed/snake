@@ -5,13 +5,15 @@ width = 720
 height = 720
 x, y, r = width/2, height/2, 20
 
-pl = tkinter.Canvas(bg="#282c34", width=width, height=height)
+red, green, blue, gray = "#e74c3c", "#76e2af", "#32b1d3", "#282c34"
+
+pl = tkinter.Canvas(bg=gray, width=width, height=height)
 pl.pack()
 
 coords = [[x, y]]
 
 
-def kresli(event):
+def draw(event):
     global x, y, r, prev_x, prev_y
     tl = event.keysym
 
@@ -28,54 +30,55 @@ def kresli(event):
         y += r*2
 
     if (x + r) > width:
-        x -= 2*r
-        oval(prev_x, prev_y, "#e74c3c")
+        x -= r*2
+        oval(x, y, red)
         pl.update()
         time.sleep(0.2)
-        oval(x, y, "#76e2af")
+        oval(x, y, green)
         pl.update()
-    elif (x - 2*r) < 0:
-        x += 2*r
-        oval(prev_x, prev_y, "#e74c3c")
+    elif (x - r*2) < 0:
+        x += r*2
+        oval(x, y, red)
         pl.update()
         time.sleep(0.2)
-        oval(x, y, "#76e2af")
+        oval(x, y, green)
         pl.update()
 
-    elif (y + 2*r) > height:
-        y -= 2*r
-        oval(prev_x, prev_y, "#e74c3c")
+    elif (y + r*2) > height:
+        y -= r*2
+        oval(x, y, red)
         pl.update()
         time.sleep(0.2)
-        oval(x, y, "#76e2af")
+        oval(x, y, green)
         pl.update()
-    elif (y - 2*r) < 0:
-        y += 2*r
-        oval(prev_x, prev_y, "#e74c3c")
+    elif (y - r*2) < 0:
+        y += r*2
+        oval(x, y, red)
         pl.update()
         time.sleep(0.2)
-        oval(x, y, "#76e2af")
+        oval(x, y, green)
         pl.update()
 
     else:
-        oval(prev_x, prev_y, "#32b1d3")
+        oval(prev_x, prev_y, blue)
         if ([x, y] in coords):
-            oval(x, y, "#e74c3c")
+            oval(x, y, red)
             pl.update()
             time.sleep(0.2)
-            oval(x, y, "#76e2af")
+            oval(x, y, green)
             pl.update()
         else:
-            oval(x, y, "#76e2af")
-            oval(prev_x, prev_y, "#32b1d3")
+            oval(x, y, green)
             coords.append([x, y])
+
+        oval(prev_x, prev_y, blue)
 
 
 def oval(x_oval, y_oval, fill):
     pl.create_rectangle(x_oval - r, y_oval - r, x_oval + r, y_oval + r, fill=fill, width=0)
 
 
-oval(x, y, "#76e2af")
-pl.bind_all("<Key>", kresli)
+oval(x, y, green)
+pl.bind_all("<Key>", draw)
 
 pl.mainloop()
