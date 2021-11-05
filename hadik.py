@@ -5,7 +5,9 @@ width = 720
 height = 720
 x, y, r = width/2, height/2, 20
 
-red, green, blue, gray = "#e74c3c", "#76e2af", "#32b1d3", "#282c34"
+max_lenght = 10
+
+red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
 
 pl = tkinter.Canvas(bg=gray, width=width, height=height)
 pl.pack()
@@ -61,15 +63,22 @@ def draw(event):
 
     else:
         oval(prev_x, prev_y, blue)
-        if ([x, y] in coords):
+
+        if [x, y] in coords:
+            coords.remove([x, y])
             oval(x, y, red)
             pl.update()
-            time.sleep(0.2)
+            time.sleep(0.1)
             oval(x, y, green)
             pl.update()
         else:
             oval(x, y, green)
-            coords.append([x, y])
+
+        coords.append([x, y])
+        
+        if len(coords) > max_lenght:
+            oval(coords[0][0], coords[0][1], gray)
+            coords.remove(coords[0])
 
         oval(prev_x, prev_y, blue)
 
