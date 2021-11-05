@@ -3,8 +3,9 @@ import time
 
 width = 720
 height = 720
-x, y, r = width/2, height/2, 20
+x, y = width/2, height/2
 
+size = 20
 max_lenght = 10
 
 red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
@@ -16,28 +17,28 @@ coords = [[x, y]]
 
 
 def draw(event):
-    global x, y, r
+    global x, y, size
     tl = event.keysym
 
     prev_x, prev_y = x, y
 
-    if tl == "Left": x -= r*2
-    elif tl == "Right": x += r*2
-    elif tl == "Up": y -= r*2
-    elif tl == "Down": y += r*2
+    if tl == "Left": x -= size*2
+    elif tl == "Right": x += size*2
+    elif tl == "Up": y -= size*2
+    elif tl == "Down": y += size*2
 
-    if (x + r) > width:
-        x -= r*2
+    if (x + size) > width:
+        x -= size*2
         blink(x, y)
-    elif (x - r*2) < 0:
-        x += r*2
+    elif (x - size*2) < 0:
+        x += size*2
         blink(x, y)
 
-    elif (y + r*2) > height:
-        y -= r*2
+    elif (y + size*2) > height:
+        y -= size*2
         blink(x, y)
-    elif (y - r*2) < 0:
-        y += r*2
+    elif (y - size*2) < 0:
+        y += size*2
         blink(x, y)
 
     else:
@@ -59,7 +60,7 @@ def draw(event):
 
 
 def oval(x_oval, y_oval, fill):
-    pl.create_rectangle(x_oval - r, y_oval - r, x_oval + r, y_oval + r, fill=fill, width=0)
+    pl.create_rectangle(x_oval - size, y_oval - size, x_oval + size, y_oval + size, fill=fill, width=0)
 
 def blink(x_oval, y_oval):
     oval(x_oval, y_oval, red)
