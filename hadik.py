@@ -18,14 +18,15 @@ coords = [[x, y]]
 
 def draw(event):
     global x, y, size
-    tl = event.keysym
 
+    tl = event.keysym
     prev_x, prev_y = x, y
 
     if tl == "Left": x -= size*2
     elif tl == "Right": x += size*2
     elif tl == "Up": y -= size*2
     elif tl == "Down": y += size*2
+    else: return
 
     if (x + size) > width:
         x -= size*2
@@ -45,18 +46,19 @@ def draw(event):
         oval(prev_x, prev_y, blue)
 
         if [x, y] in coords:
+            if tl == "Left": x += size*2
+            elif tl == "Right": x -= size*2
+            elif tl == "Up": y += size*2
+            elif tl == "Down": y -= size*2
+
             blink(x, y)
-            coords.remove([x, y])
         else:
+            coords.append([x, y])
             oval(x, y, green)
 
-        coords.append([x, y])
-        
         if len(coords) > max_lenght:
             oval(coords[0][0], coords[0][1], gray)
             coords.remove(coords[0])
-
-        oval(prev_x, prev_y, blue)
 
 
 def oval(x_oval, y_oval, fill):
