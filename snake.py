@@ -7,6 +7,7 @@ max_lenght = 10
 canvas_size = 720
 
 red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
+
 current_x = current_y = canvas_size / 2
 coords = [[current_x, current_y]]
 score = score_element = fruit = 0
@@ -80,11 +81,13 @@ def generate_fruit():
 
 
 def square(_x, _y, fill):
-    return pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
+    return pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size,
+                               fill=fill, width=0)
 
 
 def circle(_x, _y, fill):
-    return pl.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
+    return pl.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size,
+                          fill=fill, width=0)
 
 
 def blink(_x, _y):
@@ -99,7 +102,8 @@ def print_score(text):
     global score_element
 
     pl.delete(score_element)
-    score_element = pl.create_text(canvas_size / 2, 40, fill="yellow", text=text, font=("JetBrains Mono", 30, "bold"))
+    score_element = pl.create_text(canvas_size / 2, snake_size * 2, fill="yellow", text=text,
+                                   font=("JetBrains Mono", snake_size + 10, "bold"))
 
 
 print_score(score)
