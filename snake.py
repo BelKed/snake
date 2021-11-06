@@ -1,4 +1,5 @@
 import tkinter
+import random
 import time
 
 snake_size = 20
@@ -40,8 +41,6 @@ def draw(event):
         blink(x, y)
 
     else:
-        square(prev_x, prev_y, blue)
-
         if [x, y] in coords:
             if tl == "Left": x += snake_size * 2
             elif tl == "Right": x -= snake_size * 2
@@ -53,13 +52,31 @@ def draw(event):
             coords.append([x, y])
             square(x, y, green)
 
+        if x == fruit_x and y == fruit_y:
+            generate_fruit()
+
         if len(coords) > max_lenght:
             square(coords[0][0], coords[0][1], gray)
             coords.pop(0)
 
+        square(prev_x, prev_y, blue)
+
+
+def generate_fruit():
+    global canvas_size, fruit_x, fruit_y
+
+    fruit_x = random.randrange(snake_size * 2, canvas_size, snake_size * 2)
+    fruit_y = random.randrange(snake_size * 2, canvas_size, snake_size * 2)
+
+    circle(fruit_x, fruit_y, red)
+
 
 def square(_x, _y, fill):
     pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
+
+
+def circle(_x, _y, fill):
+    pl.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
 
 
 def blink(_x, _y):
@@ -70,7 +87,8 @@ def blink(_x, _y):
     pl.update()
 
 
+generate_fruit()
 square(x, y, green)
-pl.bind_all("<Key>", draw)
 
+pl.bind_all("<Key>", draw)
 pl.mainloop()
