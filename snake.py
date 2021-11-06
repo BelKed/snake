@@ -9,13 +9,14 @@ canvas_size = 720
 red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
 x = y = canvas_size / 2
 coords = [[x, y]]
+score = score_element = 0
 
 pl = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
 pl.pack()
 
 
 def draw(event):
-    global x, y, snake_size
+    global x, y, snake_size, score
 
     tl = event.keysym
     prev_x, prev_y = x, y
@@ -53,13 +54,15 @@ def draw(event):
             square(x, y, green)
 
         if x == fruit_x and y == fruit_y:
+            score += 1
             generate_fruit()
 
-        if len(coords) > max_lenght:
+        if len(coords) > score + 2:
             square(coords[0][0], coords[0][1], gray)
             coords.pop(0)
 
         square(prev_x, prev_y, blue)
+        print_score(score)
 
 
 def generate_fruit():
@@ -87,6 +90,14 @@ def blink(_x, _y):
     pl.update()
 
 
+def print_score(text):
+    global score_element
+
+    pl.delete(score_element)
+    score_element = pl.create_text(canvas_size / 2, 40, fill="yellow", text=text, font=("JetBrains Mono", 30, "bold"))
+
+
+print_score(score)
 generate_fruit()
 square(x, y, green)
 
