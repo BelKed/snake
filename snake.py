@@ -75,11 +75,11 @@ def generate_fruit():
 
 
 def square(_x, _y, fill):
-    pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
+    return pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
 
 
 def circle(_x, _y, fill):
-    pl.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
+    return pl.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
 
 
 def blink(_x, _y):
