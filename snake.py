@@ -1,7 +1,7 @@
 import tkinter
 import time
 
-size = 20
+snake_size = 20
 max_lenght = 10
 canvas_size = 720
 
@@ -14,39 +14,39 @@ pl.pack()
 
 
 def draw(event):
-    global x, y, size
+    global x, y, snake_size
 
     tl = event.keysym
     prev_x, prev_y = x, y
 
-    if tl == "Left": x -= size * 2
-    elif tl == "Right": x += size * 2
-    elif tl == "Up": y -= size * 2
-    elif tl == "Down": y += size * 2
+    if tl == "Left": x -= snake_size * 2
+    elif tl == "Right": x += snake_size * 2
+    elif tl == "Up": y -= snake_size * 2
+    elif tl == "Down": y += snake_size * 2
     else: return
 
-    if (x + size) > canvas_size:
-        x -= size * 2
+    if (x + snake_size) > canvas_size:
+        x -= snake_size * 2
         blink(x, y)
-    elif (x - size * 2) < 0:
-        x += size * 2
+    elif (x - snake_size * 2) < 0:
+        x += snake_size * 2
         blink(x, y)
 
-    elif (y + size * 2) > canvas_size:
-        y -= size * 2
+    elif (y + snake_size * 2) > canvas_size:
+        y -= snake_size * 2
         blink(x, y)
-    elif (y - size * 2) < 0:
-        y += size * 2
+    elif (y - snake_size * 2) < 0:
+        y += snake_size * 2
         blink(x, y)
 
     else:
         square(prev_x, prev_y, blue)
 
         if [x, y] in coords:
-            if tl == "Left": x += size * 2
-            elif tl == "Right": x -= size * 2
-            elif tl == "Up": y += size * 2
-            elif tl == "Down": y -= size * 2
+            if tl == "Left": x += snake_size * 2
+            elif tl == "Right": x -= snake_size * 2
+            elif tl == "Up": y += snake_size * 2
+            elif tl == "Down": y -= snake_size * 2
 
             blink(x, y)
         else:
@@ -59,7 +59,7 @@ def draw(event):
 
 
 def square(_x, _y, fill):
-    pl.create_rectangle(_x - size, _y - size, _x + size, _y + size, fill=fill, width=0)
+    pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size, fill=fill, width=0)
 
 
 def blink(_x, _y):
