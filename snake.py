@@ -7,8 +7,8 @@ max_lenght = 10
 canvas_size = 720
 
 red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
-x = y = canvas_size / 2
-coords = [[x, y]]
+current_x = current_y = canvas_size / 2
+coords = [[current_x, current_y]]
 score = score_element = 0
 
 pl = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
@@ -16,44 +16,44 @@ pl.pack()
 
 
 def draw(event):
-    global x, y, snake_size, score
+    global current_x, current_y, snake_size, score
 
     tl = event.keysym
-    prev_x, prev_y = x, y
+    prev_x, prev_y = current_x, current_y
 
-    if tl == "Left": x -= snake_size * 2
-    elif tl == "Right": x += snake_size * 2
-    elif tl == "Up": y -= snake_size * 2
-    elif tl == "Down": y += snake_size * 2
+    if tl == "Left": current_x -= snake_size * 2
+    elif tl == "Right": current_x += snake_size * 2
+    elif tl == "Up": current_y -= snake_size * 2
+    elif tl == "Down": current_y += snake_size * 2
     else: return
 
-    if (x + snake_size) > canvas_size:
-        x -= snake_size * 2
-        blink(x, y)
-    elif (x - snake_size * 2) < 0:
-        x += snake_size * 2
-        blink(x, y)
+    if (current_x + snake_size * 2) > canvas_size:
+        current_x -= snake_size * 2
+        blink(current_x, current_y)
+    elif (current_x - snake_size * 2) < 0:
+        current_x += snake_size * 2
+        blink(current_x, current_y)
 
-    elif (y + snake_size * 2) > canvas_size:
-        y -= snake_size * 2
-        blink(x, y)
-    elif (y - snake_size * 2) < 0:
-        y += snake_size * 2
-        blink(x, y)
+    elif (current_y + snake_size * 2) > canvas_size:
+        current_y -= snake_size * 2
+        blink(current_x, current_y)
+    elif (current_y - snake_size * 2) < 0:
+        current_y += snake_size * 2
+        blink(current_x, current_y)
 
     else:
-        if [x, y] in coords:
-            if tl == "Left": x += snake_size * 2
-            elif tl == "Right": x -= snake_size * 2
-            elif tl == "Up": y += snake_size * 2
-            elif tl == "Down": y -= snake_size * 2
+        if [current_x, current_y] in coords:
+            if tl == "Left": current_x += snake_size * 2
+            elif tl == "Right": current_x -= snake_size * 2
+            elif tl == "Up": current_y += snake_size * 2
+            elif tl == "Down": current_y -= snake_size * 2
 
-            blink(x, y)
+            blink(current_x, current_y)
         else:
-            coords.append([x, y])
-            square(x, y, green)
+            coords.append([current_x, current_y])
+            square(current_x, current_y, green)
 
-        if x == fruit_x and y == fruit_y:
+        if current_x == fruit_x and current_y == fruit_y:
             score += 1
             generate_fruit()
 
@@ -99,7 +99,7 @@ def print_score(text):
 
 print_score(score)
 generate_fruit()
-square(x, y, green)
+square(current_x, current_y, green)
 
 pl.bind_all("<Key>", draw)
 pl.mainloop()
