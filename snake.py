@@ -17,14 +17,14 @@ canvas.pack()
 
 
 def move():
-    global current_x, current_y, snake_size, score, key
+    global current_x, current_y, snake_size, score, current_key
 
     prev_x, prev_y = current_x, current_y
 
-    if key == "Left": current_x -= snake_size * 2
-    elif key == "Right": current_x += snake_size * 2
-    elif key == "Up": current_y -= snake_size * 2
-    elif key == "Down": current_y += snake_size * 2
+    if current_key == "Left": current_x -= snake_size * 2
+    elif current_key == "Right": current_x += snake_size * 2
+    elif current_key == "Up": current_y -= snake_size * 2
+    elif current_key == "Down": current_y += snake_size * 2
     else: return
 
     if (current_x + snake_size * 2) > canvas_size:
@@ -45,10 +45,10 @@ def move():
         square(prev_x, prev_y, blue)
 
         if [current_x, current_y] in coords:
-            if key == "Left": current_x += snake_size * 2
-            elif key == "Right": current_x -= snake_size * 2
-            elif key == "Up": current_y += snake_size * 2
-            elif key == "Down": current_y -= snake_size * 2
+            if current_key == "Left": current_x += snake_size * 2
+            elif current_key == "Right": current_x -= snake_size * 2
+            elif current_key == "Up": current_y += snake_size * 2
+            elif current_key == "Down": current_y -= snake_size * 2
 
             blink(current_x, current_y)
         else:
@@ -72,9 +72,9 @@ def move():
 
 
 def keypress(event):
-    global key, iteration
+    global current_key, iteration
 
-    key = event.keysym
+    current_key = event.keysym
 
     if iteration == 0:
         iteration += 1
