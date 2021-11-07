@@ -11,15 +11,15 @@ red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
 current_x = current_y = canvas_size / 2
 coords = [[current_x, current_y]]
 score = score_element = fruit = 0
+key = 'Up'
 
 canvas = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
 canvas.pack()
 
 
-def draw(event):
-    global current_x, current_y, snake_size, score
+def move():
+    global current_x, current_y, snake_size, score, key
 
-    key = event.keysym
     prev_x, prev_y = current_x, current_y
 
     if key == "Left": current_x -= snake_size * 2
@@ -69,6 +69,14 @@ def draw(event):
 
         print_score(score)
 
+    canvas.after(120, move)
+
+
+def keypress(event):
+    global key
+
+    key = event.keysym
+
 
 def generate_fruit():
     global canvas_size, fruit_x, fruit_y, fruit
@@ -110,5 +118,6 @@ print_score(score)
 generate_fruit()
 square(current_x, current_y, green)
 
-canvas.bind_all("<Key>", draw)
+canvas.bind_all("<Key>", keypress)
+move()
 canvas.mainloop()
