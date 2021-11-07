@@ -12,20 +12,20 @@ current_x = current_y = canvas_size / 2
 coords = [[current_x, current_y]]
 score = score_element = fruit = 0
 
-pl = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
-pl.pack()
+canvas = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
+canvas.pack()
 
 
 def draw(event):
     global current_x, current_y, snake_size, score
 
-    tl = event.keysym
+    key = event.keysym
     prev_x, prev_y = current_x, current_y
 
-    if tl == "Left": current_x -= snake_size * 2
-    elif tl == "Right": current_x += snake_size * 2
-    elif tl == "Up": current_y -= snake_size * 2
-    elif tl == "Down": current_y += snake_size * 2
+    if key == "Left": current_x -= snake_size * 2
+    elif key == "Right": current_x += snake_size * 2
+    elif key == "Up": current_y -= snake_size * 2
+    elif key == "Down": current_y += snake_size * 2
     else: return
 
     if (current_x + snake_size * 2) > canvas_size:
@@ -46,10 +46,10 @@ def draw(event):
         square(prev_x, prev_y, blue)
 
         if [current_x, current_y] in coords:
-            if tl == "Left": current_x += snake_size * 2
-            elif tl == "Right": current_x -= snake_size * 2
-            elif tl == "Up": current_y += snake_size * 2
-            elif tl == "Down": current_y -= snake_size * 2
+            if key == "Left": current_x += snake_size * 2
+            elif key == "Right": current_x -= snake_size * 2
+            elif key == "Up": current_y += snake_size * 2
+            elif key == "Down": current_y -= snake_size * 2
 
             blink(current_x, current_y)
         else:
@@ -76,39 +76,39 @@ def generate_fruit():
     fruit_x = random.randrange(snake_size * 2, canvas_size, snake_size * 2)
     fruit_y = random.randrange(snake_size * 2, canvas_size, snake_size * 2)
 
-    pl.delete(fruit)
+    canvas.delete(fruit)
     fruit = circle(fruit_x, fruit_y, red)
 
 
 def square(_x, _y, fill):
-    return pl.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size,
-                               fill=fill, width=0)
+    return canvas.create_rectangle(_x - snake_size, _y - snake_size, _x + snake_size,
+                                   _y + snake_size, fill=fill, width=0)
 
 
 def circle(_x, _y, fill):
-    return pl.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size,
-                          fill=fill, width=0)
+    return canvas.create_oval(_x - snake_size, _y - snake_size, _x + snake_size, _y + snake_size,
+                              fill=fill, width=0)
 
 
 def blink(_x, _y):
     square(_x, _y, red)
-    pl.update()
+    canvas.update()
     time.sleep(0.1)
     square(_x, _y, green)
-    pl.update()
+    canvas.update()
 
 
 def print_score(text):
     global score_element
 
-    pl.delete(score_element)
-    score_element = pl.create_text(canvas_size / 2, snake_size * 2, fill="yellow", text=text,
-                                   font=("JetBrains Mono", snake_size + 10, "bold"))
+    canvas.delete(score_element)
+    score_element = canvas.create_text(canvas_size / 2, snake_size * 2, fill="yellow", text=text,
+                                       font=("JetBrains Mono", snake_size + 10, "bold"))
 
 
 print_score(score)
 generate_fruit()
 square(current_x, current_y, green)
 
-pl.bind_all("<Key>", draw)
-pl.mainloop()
+canvas.bind_all("<Key>", draw)
+canvas.mainloop()
