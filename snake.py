@@ -10,7 +10,7 @@ red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
 
 current_x = current_y = canvas_size / 2
 coords = [[current_x, current_y]]
-score = score_element = fruit = iteration = 0
+score = score_element = fruit = iteration = current_key = 0
 
 canvas = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
 canvas.pack()
@@ -50,7 +50,24 @@ def move():
             elif current_key == "Up": current_y += snake_size * 2
             elif current_key == "Down": current_y -= snake_size * 2
 
-            blink(current_x, current_y)
+            if (current_key == "Left" and previous_key == "Right"):
+                current_key = "Right"
+                move()
+                return
+            elif (current_key == "Right" and previous_key == "Left"):
+                current_key = "Left"
+                move()
+                return
+            elif (current_key == "Up" and previous_key == "Down"):
+                current_key = "Down"
+                move()
+                return
+            elif (current_key == "Down" and previous_key == "Up"):
+                current_key = "Up"
+                move()
+                return
+            else:
+                blink(current_x, current_y)
         else:
             coords.append([current_x, current_y])
             square(current_x, current_y, green)
@@ -72,8 +89,9 @@ def move():
 
 
 def keypress(event):
-    global current_key, iteration
+    global current_key, previous_key, iteration
 
+    previous_key = current_key
     current_key = event.keysym
 
     if iteration == 0:
