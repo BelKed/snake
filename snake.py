@@ -10,8 +10,7 @@ red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
 
 current_x = current_y = canvas_size / 2
 coords = [[current_x, current_y]]
-score = score_element = fruit = 0
-key = 'Up'
+score = score_element = fruit = iteration = 0
 
 canvas = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
 canvas.pack()
@@ -73,9 +72,13 @@ def move():
 
 
 def keypress(event):
-    global key
+    global key, iteration
 
     key = event.keysym
+
+    if iteration == 0:
+        iteration += 1
+        move()
 
 
 def generate_fruit():
@@ -119,5 +122,4 @@ generate_fruit()
 square(current_x, current_y, green)
 
 canvas.bind_all("<Key>", keypress)
-move()
 canvas.mainloop()
