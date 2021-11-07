@@ -29,17 +29,17 @@ def move():
 
     if (current_x + snake_size * 2) > canvas_size:
         current_x -= snake_size * 2
-        blink(current_x, current_y)
+        blink(current_x, current_y, score, "You've hit the wall")
     elif (current_x - snake_size * 2) < 0:
         current_x += snake_size * 2
-        blink(current_x, current_y)
+        blink(current_x, current_y, score, "You've hit the wall")
 
     elif (current_y + snake_size * 2) > canvas_size:
         current_y -= snake_size * 2
-        blink(current_x, current_y)
+        blink(current_x, current_y, score, "You've hit the wall")
     elif (current_y - snake_size * 2) < 0:
         current_y += snake_size * 2
-        blink(current_x, current_y)
+        blink(current_x, current_y, score, "You've hit the wall")
 
     else:
         square(prev_x, prev_y, blue)
@@ -67,7 +67,7 @@ def move():
                 move()
                 return
             else:
-                blink(current_x, current_y)
+                blink(current_x, current_y, score, "You've eaten yourself")
         else:
             coords.append([current_x, current_y])
             square(current_x, current_y, green)
@@ -119,20 +119,34 @@ def circle(_x, _y, fill):
                               fill=fill, width=0)
 
 
-def blink(_x, _y):
+def blink(_x, _y, score, text):
     square(_x, _y, red)
+    print_score(score)
     canvas.update()
+
     time.sleep(0.1)
+
     square(_x, _y, green)
+    print_score(score)
     canvas.update()
+
+    print_text(canvas_size / 2, canvas_size / 2, text)
+    canvas.update()
+
+    time.sleep(2)
+    exit()
+
+
+def print_text(_x, _y, text):
+    return canvas.create_text(_x, _y, fill="yellow", text=text,
+                              font=("JetBrains Mono", snake_size + 10, "bold"))
 
 
 def print_score(text):
     global score_element
 
     canvas.delete(score_element)
-    score_element = canvas.create_text(canvas_size / 2, snake_size * 2, fill="yellow", text=text,
-                                       font=("JetBrains Mono", snake_size + 10, "bold"))
+    score_element = print_text(canvas_size / 2, snake_size * 2, text)
 
 
 print_score(score)
