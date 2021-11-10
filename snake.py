@@ -52,20 +52,16 @@ def move():
 
             if (current_key == "Left" and previous_key == "Right"):
                 current_key = "Right"
-                move()
-                return
+                return move()
             elif (current_key == "Right" and previous_key == "Left"):
                 current_key = "Left"
-                move()
-                return
+                return move()
             elif (current_key == "Up" and previous_key == "Down"):
                 current_key = "Down"
-                move()
-                return
+                return move()
             elif (current_key == "Down" and previous_key == "Up"):
                 current_key = "Up"
-                move()
-                return
+                return move()
             else:
                 blink(current_x, current_y, score, "You've eaten yourself")
         else:
