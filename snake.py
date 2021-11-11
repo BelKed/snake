@@ -28,17 +28,17 @@ def move():
 
     if (current_x + snake_size * 2) > canvas_size:
         current_x -= snake_size * 2
-        blink(current_x, current_y, score, "You've hit the wall")
+        return blink(current_x, current_y, score, "You've hit the wall")
     elif (current_x - snake_size * 2) < 0:
         current_x += snake_size * 2
-        blink(current_x, current_y, score, "You've hit the wall")
+        return blink(current_x, current_y, score, "You've hit the wall")
 
     elif (current_y + snake_size * 2) > canvas_size:
         current_y -= snake_size * 2
-        blink(current_x, current_y, score, "You've hit the wall")
+        return blink(current_x, current_y, score, "You've hit the wall")
     elif (current_y - snake_size * 2) < 0:
         current_y += snake_size * 2
-        blink(current_x, current_y, score, "You've hit the wall")
+        return blink(current_x, current_y, score, "You've hit the wall")
 
     else:
         square(prev_x, prev_y, blue)
@@ -62,7 +62,7 @@ def move():
                 current_key = "Up"
                 return move()
             else:
-                blink(current_x, current_y, score, "You've eaten yourself")
+                return blink(current_x, current_y, score, "You've eaten yourself")
         else:
             coords.append([current_x, current_y])
             square(current_x, current_y, green)
