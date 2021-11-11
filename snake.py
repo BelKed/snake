@@ -25,7 +25,6 @@ def move():
     elif current_key == "Right": current_x += snake_size * 2
     elif current_key == "Up": current_y -= snake_size * 2
     elif current_key == "Down": current_y += snake_size * 2
-    else: return
 
     if (current_x + snake_size * 2) > canvas_size:
         current_x -= snake_size * 2
@@ -87,12 +86,13 @@ def move():
 def keypress(event):
     global current_key, previous_key, iteration
 
-    previous_key = current_key
-    current_key = event.keysym
+    if event.keysym == "Left" or event.keysym == "Right" or event.keysym == "Up" or event.keysym == "Down":
+        previous_key = current_key
+        current_key = event.keysym
 
-    if iteration == 0:
-        iteration += 1
-        move()
+        if iteration == 0:
+            iteration += 1
+            move()
 
 
 def generate_fruit():
