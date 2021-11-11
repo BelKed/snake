@@ -8,10 +8,6 @@ canvas_size = 720
 
 red, green, blue, gray = "#e36666", "#76e2af", "#32b1d3", "#282c34"
 
-current_x = current_y = canvas_size / 2
-coords = [[current_x, current_y]]
-score = score_element = fruit = iteration = current_key = 0
-
 canvas = tkinter.Canvas(bg=gray, width=canvas_size, height=canvas_size)
 canvas.pack()
 
@@ -84,14 +80,17 @@ def move():
 
 
 def keypress(event):
-    global current_key, previous_key, iteration
+    global current_key, previous_key, iteration, menu_text
 
-    if event.keysym == "Left" or event.keysym == "Right" or event.keysym == "Up" or event.keysym == "Down":
+    if event.keysym == "Left" or event.keysym == "Right" or \
+       event.keysym == "Up" or event.keysym == "Down":
         previous_key = current_key
         current_key = event.keysym
 
         if iteration == 0:
             iteration += 1
+
+            canvas.delete(menu_text)
             move()
 
 
@@ -129,8 +128,8 @@ def blink(_x, _y, score, text):
     print_text(canvas_size / 2, canvas_size / 2, text)
     canvas.update()
 
-    time.sleep(2)
-    exit()
+    time.sleep(1.5)
+    reset()
 
 
 def print_text(_x, _y, text):
@@ -145,9 +144,22 @@ def print_score(text):
     score_element = print_text(canvas_size / 2, snake_size * 2, text)
 
 
-print_score(score)
-generate_fruit()
-square(current_x, current_y, green)
+def reset():
+    global current_x, current_y, canvas_size, coords, score, score_element, fruit, iteration, \
+           current_key, previous_key, menu_text
 
+    current_x = current_y = canvas_size / 2
+    coords = [[current_x, current_y]]
+    score = score_element = fruit = iteration = current_key = previous_key = 0
+
+    canvas.delete("all")
+
+    print_score(score)
+    generate_fruit()
+    square(current_x, current_y, green)
+    menu_text = print_text(canvas_size / 2, canvas_size / 2, "Press any arrow key to start playing")
+
+
+reset()
 canvas.bind_all("<Key>", keypress)
 canvas.mainloop()
