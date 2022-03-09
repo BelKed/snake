@@ -1,10 +1,8 @@
 # Snake
 
-A simple snake game written in [Python](https://www.python.org) using the built-in [`tkinter`](https://docs.python.org/3/library/tkinter.html) library.
+<img align="right" width="450" src="./snake.gif">
 
-<p align="center">
-  <img width="500" src="./snake.gif">
-</p>
+A simple snake game written in [Python](https://www.python.org) using the built-in [`tkinter`](https://docs.python.org/3/library/tkinter.html) library.
 
 ## Requirements
 
