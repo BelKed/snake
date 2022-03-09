@@ -1,6 +1,6 @@
 # Snake
 
-<img align="right" width="450" src="./snake.gif">
+<img align="right" width="400" src="./snake.gif">
 
 A simple snake game written in [Python](https://www.python.org) using the built-in [`tkinter`](https://docs.python.org/3/library/tkinter.html) library.
 
